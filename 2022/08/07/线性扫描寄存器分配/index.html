@@ -61,7 +61,9 @@ gtag('config', '302924534');</script><html><head><meta name="generator" content=
 <p>如果两个虚拟变量的活跃区间发生了重叠，那么可以称这两个虚拟变量存在冲突，产生了冲突的两个变量不可以使用同一个寄存器，类似于**Fig 1(b)**中两个区间，就发生了重叠，那么就不可以使用同一个寄存器了。</p>
 <p>这里需要提到的是，对指令的编号会影响到代码生成的质量，因为在有些编号下活跃区间会更加短，更短的活跃区间会降低冲突的可能性<a href="#ref-3">[3]</a>。比如下面的例子中，<code>then</code>分支使用了$v$，但是<code>else</code>分支并没有使用v，同时<code>then</code>中的使用是最后一次使用，给<code>then</code>先编号会得到**Fig 3(b)<strong>的结果，而给<code>else</code>先编号则会得到</strong>Fig 3(a)**的结果。</p>
 <div>
+<p align="center">
 <img src="/2022/08/07/%E7%BA%BF%E6%80%A7%E6%89%AB%E6%8F%8F%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/if-else-then.svg">
+</p>
 <center><b>Fig 2. 一个if-then-else控制流，其中v只在then中被使用</b></center>
 </div>
 
