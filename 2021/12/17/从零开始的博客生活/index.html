@@ -46,8 +46,7 @@ gtag('config', '302924534');</script><html><head><meta name="generator" content=
     </p>
 </blockquote>
 
-
-<p>按照waline官方文档一步步来配置，却在HTML引入（客户端）这一步遇到了问题。首先是需要将它中给出的.html文件引入主题文件夹，而paper的主题文件夹中以.pug文件为主。其次我并不知道这个文件应该放在哪里。</p>
+<p>按照waline官方文档一步步来配置，却在HTML引入（客户端）这一步遇到了问题。首先是需要将它给出的.html文件引入主题文件夹，而paper的主题文件夹中以.pug文件为主。其次我并不知道这个文件应该放在哪里。</p>
 <p>我想到，paper配置提示要安装 stylus 和 pug 转换工具，那么我一定需要将这个.html文件转换成.pug文件。在搜索引擎上找了一个在线的转换工具，成功！</p>
 <p>然后就去找这个文件到底应该放在哪。打开一个名叫comments-script.pug的文件，发现里面和我转换得到的文件内容很像，只不过是’waline’和’valine’的区别，就是这了！</p>
 <blockquote>
