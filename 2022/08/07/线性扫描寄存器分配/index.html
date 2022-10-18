@@ -35,7 +35,7 @@ gtag('config', '302924534');</script><html><head><meta name="generator" content=
     orderedList: false,
     collapseDepth: 2,
   });
-})</script><link rel="preload" href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/github.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/github.min.css"><link rel="preload" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap"><link rel="preload" href="https://fonts.geekzu.org/css?family=Noto+Serif+SC:500,700" as="style" onload="this.onload=null;this.rel='stylesheet'"><link rel="stylesheet" href="https://fonts.geekzu.org/css?family=Noto+Serif+SC:500,700"></head><body><div class="mask-border"></div><div class="head"><div class="head__inner"><h1><a href="/">Ecolorfz's Blog</a></h1><p> CS Undergraduate @TJU|A叔狂粉|好きなことを続けること</p></div></div><div class="paper-container"><div class="main"><div class="location-bar"><div class="line-1"><div class="horizontal-line" style="height: 3px"></div></div><div class="line-2"><div class="horizontal-line" style="height: 1px"></div></div><p class="text">线性扫描寄存器分配</p><div class="switch-button"><input class="container_toggle" type="checkbox" id="switch" name="mode"><label for="switch">Toggle</label></div><div class="line-3"><div class="horizontal-line" style="height: 1px"></div></div></div><div class="main__2-col"><article class="post-view__article"><div class="article__infomation"><div class="posts-item"><h2 class="posts-item__title"><a href="">线性扫描寄存器分配</a></h2><span class="post__date">2022-08-07</span></div></div><div class="article__content"><p>这里所讲的内容主要来自于<a href="#ref-1">[1]</a>，也就是最为基础的线性扫描寄存器分配方案，可以做到线性时间内进行寄存器分配，比起图着色分配是一种快的多的分配方案。</p>
+})</script><link rel="preload" href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/github.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/github.min.css"><link rel="preload" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap"><link rel="preload" href="https://fonts.geekzu.org/css?family=Noto+Serif+SC:500,700" as="style" onload="this.onload=null;this.rel='stylesheet'"><link rel="stylesheet" href="https://fonts.geekzu.org/css?family=Noto+Serif+SC:500,700"></head><body><div class="mask-border"></div><div class="head"><div class="head__inner"><h1><a href="/">Ecolorfz's Blog</a></h1><p> CS Undergraduate @TJU|A叔狂粉|好きなことを続けること</p></div></div><div class="paper-container"><div class="main"><div class="location-bar"><div class="line-1"><div class="horizontal-line" style="height: 3px"></div></div><div class="line-2"><div class="horizontal-line" style="height: 1px"></div></div><p class="text">线性扫描寄存器分配</p><div class="switch-button"><input class="container_toggle" type="checkbox" id="switch" name="mode"><label for="switch">Toggle</label></div><div class="line-3"><div class="horizontal-line" style="height: 1px"></div></div></div><div class="main__2-col"><article class="post-view__article"><div class="article__infomation"><div class="posts-item"><h2 class="posts-item__title"><a href="">线性扫描寄存器分配</a></h2><span class="post__date">2022-08-07</span><a href="/tags/%E6%8A%80%E6%9C%AF/"><span class="post__tags">#技术</span></a><a href="/tags/%E8%BD%AC%E8%BD%BD/"><span class="post__tags">#转载</span></a></div></div><div class="article__content"><p>这里所讲的内容主要来自于<a href="#ref-1">[1]</a>，也就是最为基础的线性扫描寄存器分配方案，可以做到线性时间内进行寄存器分配，比起图着色分配是一种快的多的分配方案。</p>
 <h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p>首先来介绍最基础的线性扫描分配器，大致分为下面：</p>
 <ol>
 <li>计算出每个虚拟寄存器的活跃区间（Live Interval），根据活跃区间的起点进行排序。</li>
@@ -61,12 +61,18 @@ gtag('config', '302924534');</script><html><head><meta name="generator" content=
 <p>如果两个虚拟变量的活跃区间发生了重叠，那么可以称这两个虚拟变量存在冲突，产生了冲突的两个变量不可以使用同一个寄存器，类似于**Fig 1(b)**中两个区间，就发生了重叠，那么就不可以使用同一个寄存器了。</p>
 <p>这里需要提到的是，对指令的编号会影响到代码生成的质量，因为在有些编号下活跃区间会更加短，更短的活跃区间会降低冲突的可能性<a href="#ref-3">[3]</a>。比如下面的例子中，<code>then</code>分支使用了$v$，但是<code>else</code>分支并没有使用v，同时<code>then</code>中的使用是最后一次使用，给<code>then</code>先编号会得到**Fig 3(b)<strong>的结果，而给<code>else</code>先编号则会得到</strong>Fig 3(a)**的结果。</p>
 <p align="center">
-<img src="/2022/08/07/%E7%BA%BF%E6%80%A7%E6%89%AB%E6%8F%8F%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/if-else-then.svg">
-<b>Fig 2. 一个if-then-else控制流，其中v只在then中被使用</b>
+  <div>
+    <center><img src="/2022/08/07/%E7%BA%BF%E6%80%A7%E6%89%AB%E6%8F%8F%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/if-else-then.svg"></center>
+<center><b>Fig 2. 一个if-then-else控制流，其中v只在then中被使用</b></center>
+</div>
 </p>
 
-<p><img src="/2022/08/07/%E7%BA%BF%E6%80%A7%E6%89%AB%E6%8F%8F%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/08/07/%E7%BA%BF%E6%80%A7%E6%89%AB%E6%8F%8F%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/different-range.svg" alt="different-range"></p>
+<p align="center">
+  <div>
+   <center><img src="/2022/08/07/%E7%BA%BF%E6%80%A7%E6%89%AB%E6%8F%8F%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/different-range.svg"></center> 
 <center><b>Fig 3. 两种不同的编号方式</b></center>
+</div>
+</p>
 
 <p>很容易发现，一些活跃区间会出现类似于**Fig 3(a)**的空洞，如果另外一个活跃区间正好在这个空洞里面，就不会发生冲突，不过我们这里并不利用这种空洞，而是简单地将活跃区间从头到尾当成一个整体。</p>
 <h3 id="对活跃区间线性扫描"><a href="#对活跃区间线性扫描" class="headerlink" title="对活跃区间线性扫描"></a>对活跃区间线性扫描</h3><p>接下来对活跃区间进行扫描，在进行扫描之前首先对所有的活跃区间进行排序，根据区间开始点从低到高。排序后的活跃区间很适合进行线性扫描，对活跃区间的迭代的顺序和标号顺序是一样的。</p>
@@ -74,7 +80,7 @@ gtag('config', '302924534');</script><html><head><meta name="generator" content=
 <p>每次向前扫描可以遇到一个新的活跃区间$I_{new}$，用$I_{new}$的起点$i$和$active$链表中的每个区间$I_{old}$的终点$j$进行对比，如果出现了$j \le i$，那么就将$I_{old}$从$active$中移除，这个时候可以认为$I_{old}$以及被完全处理了，不需要再次进行考虑。</p>
 <p>再进行了对$active$的更新之后，如果$size(active) \ge R$那么此时必须要将链表中的某个$I_{old}$或者是$I_{new}$进行spill，可以使用多种方式决定到底需要将那个区间进行spill，这里给出一个heuristic，就是使用结束位置最后的一个区间进行spill，这么做的原因是，因为结束的位置最后，所以会延续很长因此可能会导致更多的区间被溢出，如果使用了区间的终点从高到低进行排列，那么$active$中最后结束的就是第一个。除此之外还可以通过区间的使用频率的等信息进行判断。</p>
 <p><strong>Fig 4</strong>是一个来自<a href="#ref-1">[1]</a>的例子，一共有两个可用的寄存器，即$R&#x3D;2$。</p>
-<p><img src="/2022/08/07/%E7%BA%BF%E6%80%A7%E6%89%AB%E6%8F%8F%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/08/07/%E7%BA%BF%E6%80%A7%E6%89%AB%E6%8F%8F%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/image-20220408235832498.png" alt="image-20220408235832498"></p>
+<center><img src="/2022/08/07/%E7%BA%BF%E6%80%A7%E6%89%AB%E6%8F%8F%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/image-20220408235832498.png"></center>
 <center><b>(a) 五个活跃区间，其中B和E首位相连</b></center>
 
 <table>
